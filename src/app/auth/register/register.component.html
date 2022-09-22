@@ -11,7 +11,7 @@
           <h4 class="card-title text-center">
             <i class="far fa-3x fa-user-circle text-muted"></i>
           </h4>
-          <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+          <form [formGroup]="registerForm" novalidate>
             <div class="alert alert-danger" [hidden]="!error || isLoading">Username or password incorrect.</div>
             <div class="m-3">
               <label class="d-block my-3">
@@ -24,7 +24,7 @@
                 />
                 <span hidden>Username</span>
                 <small
-                  [hidden]="loginForm.controls['username'].valid || loginForm.controls['username'].untouched"
+                  [hidden]="registerForm.controls['username'].valid || registerForm.controls['username'].untouched"
                   class="text-danger"
                 >
                   Username is required
@@ -41,7 +41,7 @@
                 />
                 <span hidden>Password</span>
                 <small
-                  [hidden]="loginForm.controls['password'].valid || loginForm.controls['password'].untouched"
+                  [hidden]="registerForm.controls['password'].valid || registerForm.controls['password'].untouched"
                   class="text-danger"
                 >
                   Password is required
@@ -55,7 +55,7 @@
               </div>
             </div>
             <div class="m-3">
-              <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
+              <button class="btn btn-primary w-100" type="submit" [disabled]="registerForm.invalid || isLoading">
                 <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
                 <span>Login</span>
               </button>

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Credentials, CredentialsService } from './credentials.service';
 
@@ -17,21 +19,37 @@ export interface LoginContext {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private credentialsService: CredentialsService) {}
+  constructor(private credentialsService: CredentialsService, private http: HttpClient) {}
 
   /**
    * Authenticates the user.
    * @param context The login parameters.
    * @return The user credentials.
    */
-  login(context: LoginContext): Observable<Credentials> {
-    // Replace by proper authentication call
+  login(credentials: LoginContext): Observable<any> {
     const data = {
-      username: context.username,
-      token: '123456',
+      email: credentials.username,
+      password: credentials.password,
     };
-    this.credentialsService.setCredentials(data, context.remember);
-    return of(data);
+
+    return this.http.post('/auth/login', data, { observe: 'response' }).pipe(
+      map((resp: any) => {
+        const response = {
+          username: resp.body.user.email,
+          token: resp.body.token || null,
+          status: resp.body.status || null,
+          message: resp.body.message || null,
+        };
+        console.log(response);
+
+        if (!response.status && !response.message) {
+          this.credentialsService.setCredentials(response);
+          return resp.body.user;
+        } else {
+          return resp.body.status;
+        }
+      }).bind(this)
+    );
   }
 
   /**
