@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (!!credentials) {
       const token = JSON.parse(credentials).token.access.token;
-      console.log(token);
 
       if (!!token) {
         request = request.clone({
