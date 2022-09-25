@@ -7,9 +7,10 @@ import { AuthModule } from '@app/auth';
 import { ShellComponent } from './shell.component';
 import { HeaderComponent } from './header/header.component';
 import { AddBtnComponent } from './add-btn/add-btn.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, NgbModule, AuthModule, RouterModule],
+  imports: [CommonModule, NgbModule, AuthModule, RouterModule, ReactiveFormsModule],
   declarations: [HeaderComponent, ShellComponent, AddBtnComponent],
 })
 export class ShellModule {}

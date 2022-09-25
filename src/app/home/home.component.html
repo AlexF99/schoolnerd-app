@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <div class="jumbotron text-center">
-    <h1>
-      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo" />
-      <span>Hello world !</span>
-    </h1>
+    <h1>My classes</h1>
   </div>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let item of myClasses">{{ item.title }}</li>
+  </ul>
 </div>

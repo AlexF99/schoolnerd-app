@@ -7,12 +7,12 @@ import { DataService } from '@app/@shared/data.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  quote: string | undefined;
+  myClasses: any;
   isLoading = false;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.dataService.getUserInfo().subscribe((data) => console.log(data.body));
+    this.dataService.list('/school-class').subscribe((data) => (this.myClasses = data.body));
   }
 }

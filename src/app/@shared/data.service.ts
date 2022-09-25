@@ -23,27 +23,12 @@ export class DataService {
     return this.http.get(`${route}/${id}`, { observe: 'response' });
   }
 
-  list(route: string, filter?: any): Observable<EntityArrayResponseType> {
-    const query = filter || {};
-    return this.http.get<any[]>(route, { observe: 'response', params: query });
-  }
-
-  listAll(route: string, filter?: any): Observable<EntityArrayResponseType> {
-    const query = filter || {};
-    return this.http.get<any[]>(`${route}/all`, { observe: 'response', params: query });
-  }
-
-  search(route: string, filter?: any): Observable<EntityArrayResponseType> {
-    const query = filter || {};
-    return this.http.get<any[]>(`${route}/search`, { observe: 'response', params: query });
+  list(route: string): Observable<EntityArrayResponseType> {
+    return this.http.get<any[]>(route, { observe: 'response' });
   }
 
   create(route: string, entity: any): Observable<EntityResponseType> {
     return this.http.post(`${route}`, entity, { observe: 'response' });
-  }
-
-  createMany(route: string, entities: any[]): Observable<EntityArrayResponseType> {
-    return this.http.post<any[]>(`${route}/many`, entities, { observe: 'response' });
   }
 
   update(route: string, entity: any): Observable<EntityResponseType> {

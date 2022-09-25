@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isLoading = true;
-    console.log(this.loginForm.value);
-
     const login$ = this.authenticationService.login(this.loginForm.value);
     login$
       .pipe(
