@@ -36,7 +36,7 @@ export class AuthenticationService {
       map((resp: any) => {
         const response = {
           username: resp.body.user.email,
-          token: resp.body.token || null,
+          token: resp.body.tokens || null,
           status: resp.body.status || null,
           message: resp.body.message || null,
         };
