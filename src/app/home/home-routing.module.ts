@@ -4,11 +4,13 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 
 import { HomeComponent } from './home.component';
 import { Shell } from '@app/shell/shell.service';
+import { SchoolClassComponent } from './school-class/school-class.component';
 
 const routes: Routes = [
   Shell.childRoutes([
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent, data: { title: marker('Home') } },
+    { path: 'class/:id', component: SchoolClassComponent },
   ]),
 ];
 

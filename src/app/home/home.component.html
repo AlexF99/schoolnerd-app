@@ -3,6 +3,8 @@
     <h1>My classes</h1>
   </div>
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let item of myClasses">{{ item.title }}</li>
+    <li class="list-group-item" *ngFor="let item of myClasses">
+      <a routerLink="/class/{{ item.id }}">{{ item.title }}</a>
+    </li>
   </ul>
 </div>

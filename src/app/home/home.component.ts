@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@app/@shared/data.service';
+import { HttpService } from '@app/@shared/http.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,11 @@ export class HomeComponent implements OnInit {
   myClasses: any;
   isLoading = false;
 
-  constructor(private dataService: DataService) {}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit() {
-    this.dataService.list('/school-class').subscribe((data) => (this.myClasses = data.body));
+    this.httpService.list('/school-class').subscribe((data) => {
+      this.myClasses = data.body;
+    });
   }
 }

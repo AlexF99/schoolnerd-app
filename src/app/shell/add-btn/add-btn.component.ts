@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DataService } from '@app/@shared/data.service';
+import { HttpService } from '@app/@shared/http.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -11,7 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AddBtnComponent implements OnInit {
   addForm!: FormGroup;
 
-  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private dataService: DataService) {
+  constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private httpService: HttpService) {
     this.createForm();
   }
 
@@ -21,7 +21,6 @@ export class AddBtnComponent implements OnInit {
     this.addForm = this.formBuilder.group({
       title: ['', Validators.required],
       minGrade: ['', Validators.required],
-      grade: ['', Validators.required],
     });
   }
 
@@ -32,7 +31,7 @@ export class AddBtnComponent implements OnInit {
   save() {
     if (!this.addForm.valid) return;
 
-    this.dataService.create('/school-class', this.addForm.value).subscribe((data) => console.log(data));
+    this.httpService.create('/school-class', this.addForm.value).subscribe((data) => console.log(data));
     this.addForm.reset();
 
     this.modalService.dismissAll();
