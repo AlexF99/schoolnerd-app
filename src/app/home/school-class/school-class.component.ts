@@ -37,6 +37,7 @@ export class SchoolClassComponent implements OnInit {
     this.addForm = this.formBuilder.group({
       title: ['', Validators.required],
       grade: '',
+      weight: '',
       date: ['', Validators.required],
     });
   }
