@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '@app/@shared/data.service';
 import { HttpService } from '@app/@shared/http.service';
 
 @Component({

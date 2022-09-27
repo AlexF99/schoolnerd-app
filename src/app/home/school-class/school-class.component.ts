@@ -11,6 +11,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SchoolClassComponent implements OnInit {
   myClass: any;
+  assignments: any;
+
   addForm!: FormGroup;
   classId: string = '';
 
@@ -26,12 +28,15 @@ export class SchoolClassComponent implements OnInit {
   ngOnInit() {
     this.classId = this.route.snapshot.params['id'];
     this.httpService.find('/school-class', this.classId).subscribe((data) => (this.myClass = data.body));
+    this.httpService
+      .listFilter('/assignment', { schoolClass: this.classId })
+      .subscribe((data) => (this.assignments = data.body));
   }
 
   private createForm() {
     this.addForm = this.formBuilder.group({
       title: ['', Validators.required],
-      grade: ['', Validators.required],
+      grade: '',
       date: ['', Validators.required],
     });
   }
@@ -43,12 +48,14 @@ export class SchoolClassComponent implements OnInit {
   save() {
     if (!this.addForm.valid) return;
 
-    const newClass = {
+    const newAssignment = {
       schoolClass: this.classId,
       ...this.addForm.value,
     };
 
-    this.httpService.create('/assignment', newClass).subscribe((data) => console.log(data.body));
+    this.httpService
+      .create('/assignment', newAssignment)
+      .subscribe((data) => (this.assignments = [...this.assignments, data.body]));
     this.addForm.reset();
 
     this.modalService.dismissAll();

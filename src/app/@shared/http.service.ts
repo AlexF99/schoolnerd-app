@@ -27,6 +27,11 @@ export class HttpService {
     return this.http.get<any[]>(route, { observe: 'response' });
   }
 
+  listFilter(route: string, filter?: any): Observable<EntityArrayResponseType> {
+    const query = filter || {};
+    return this.http.get<any[]>(`${route}`, { observe: 'response', params: query });
+  }
+
   create(route: string, entity: any): Observable<EntityResponseType> {
     return this.http.post(`${route}`, entity, { observe: 'response' });
   }

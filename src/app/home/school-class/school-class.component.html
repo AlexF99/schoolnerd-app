@@ -3,11 +3,15 @@
     <h1>{{ myClass?.title }}</h1>
     <h2>Minimum grade: {{ myClass?.minGrade }}</h2>
   </div>
-  <!-- <ul class="list-group">
-    <li class="list-group-item" *ngFor="let item of myClass?.assignments">
-      <a routerLink="/class/{{ item.id }}">{{ item.title }}</a>
-    </li>
-  </ul> -->
+
+  <div class="container">
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between" *ngFor="let item of assignments">
+        <span>{{ item.title }} - {{ item.date | date }}</span>
+        <span *ngIf="item.grade">grade: {{ item.grade }}</span>
+      </li>
+    </ul>
+  </div>
 
   <ng-template #content let-modal>
     <div class="modal-header">
