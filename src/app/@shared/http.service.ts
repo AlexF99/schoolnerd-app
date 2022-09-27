@@ -37,7 +37,7 @@ export class HttpService {
   }
 
   update(route: string, entity: any): Observable<EntityResponseType> {
-    return this.http.put(`${route}`, entity, { observe: 'response' });
+    return this.http.patch(`${route}`, entity, { observe: 'response' });
   }
 
   remove(route: string, entity: any): Observable<EntityResponseType> {

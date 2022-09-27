@@ -16,6 +16,9 @@ export class SchoolClassComponent implements OnInit {
   addForm!: FormGroup;
   classId: string = '';
 
+  isEditing: boolean = false;
+  editedAssignment: any;
+
   constructor(
     private httpService: HttpService,
     private route: ActivatedRoute,
@@ -42,21 +45,39 @@ export class SchoolClassComponent implements OnInit {
     });
   }
 
-  open(content: any) {
+  open(content: any, assignment?: any) {
+    if (assignment) {
+      this.isEditing = true;
+      this.editedAssignment = assignment;
+      this.addForm = this.formBuilder.group({
+        title: [assignment.title, Validators.required],
+        grade: assignment.grade ? assignment.grade : '',
+        weight: assignment.weight ? assignment.weight : '',
+        date: [assignment.date, Validators.required],
+      });
+    } else {
+      this.isEditing = false;
+      this.editedAssignment = null;
+    }
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  save() {
+  save(assignment?: any) {
     if (!this.addForm.valid) return;
 
     const newAssignment = {
       schoolClass: this.classId,
       ...this.addForm.value,
     };
+    if (this.isEditing) {
+      this.httpService.update(`/assignment/${assignment.id}`, newAssignment).subscribe((data) => {});
+    } else {
+      this.httpService
+        .create('/assignment', newAssignment)
+        .subscribe((data) => (this.assignments = [...this.assignments, data.body]));
+    }
 
-    this.httpService
-      .create('/assignment', newAssignment)
-      .subscribe((data) => (this.assignments = [...this.assignments, data.body]));
     this.addForm.reset();
 
     this.modalService.dismissAll();

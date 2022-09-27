@@ -6,11 +6,13 @@
 
   <div class="container">
     <ul class="list-group mb-3">
-      <li class="list-group-item d-flex justify-content-between" *ngFor="let item of assignments">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of assignments">
         <span>{{ item.title }} - {{ item.date | date }}</span>
         <span *ngIf="item.grade">grade: {{ item.grade }}</span>
+        <button class="btn btn-primary" (click)="open(content, item)">edit</button>
       </li>
     </ul>
+    <button class="btn btn-primary mb-3" (click)="open(content)">+ add assignment</button>
     <ul class="list-group mb-3">
       <li class="list-group-item">media: 20</li>
     </ul>
@@ -53,11 +55,15 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="save()">Save</button>
+      <button type="button" class="btn btn-outline-dark" *ngIf="!isEditing" (click)="save()">Save</button>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        *ngIf="isEditing && editedAssignment"
+        (click)="save(editedAssignment)"
+      >
+        Save
+      </button>
     </div>
   </ng-template>
-
-  <div class="container">
-    <button class="btn btn-primary" (click)="open(content)">+ add assignment</button>
-  </div>
 </div>
