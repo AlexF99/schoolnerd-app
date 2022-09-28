@@ -38,7 +38,9 @@ export class HomeComponent implements OnInit {
   save() {
     if (!this.addForm.valid) return;
 
-    this.httpService.create('/school-class', this.addForm.value).subscribe((data) => console.log(data));
+    this.httpService
+      .create('/school-class', this.addForm.value)
+      .subscribe((data) => (this.myClasses = [...this.myClasses, data.body]));
     this.addForm.reset();
 
     this.modalService.dismissAll();
