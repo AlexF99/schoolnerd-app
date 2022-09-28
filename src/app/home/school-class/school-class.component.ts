@@ -10,14 +10,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./school-class.component.scss'],
 })
 export class SchoolClassComponent implements OnInit {
+  classId: string = '';
+
+  // data
   myClass: any;
   assignments: any;
 
+  // form
   addForm!: FormGroup;
-  classId: string = '';
-
   isEditing: boolean = false;
   editedAssignment: any;
+
+  // analytics
+  average: number = 0;
 
   constructor(
     private httpService: HttpService,
@@ -29,11 +34,23 @@ export class SchoolClassComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.classId = this.route.snapshot.params['id'];
     this.httpService.find('/school-class', this.classId).subscribe((data) => (this.myClass = data.body));
-    this.httpService
-      .listFilter('/assignment', { schoolClass: this.classId })
-      .subscribe((data) => (this.assignments = data.body));
+    this.httpService.listFilter('/assignment', { schoolClass: this.classId }).subscribe((data) => {
+      this.assignments = data.body;
+      this.average = this.getAverage(this.assignments);
+    });
+  }
+
+  getAverage(assignments: any): number {
+    const sumGrades = assignments.reduce((acc: any, current: any) => acc + current.grade * current.weight, 0);
+    const sumWeights = assignments.reduce((acc: any, current: any) => acc + current.weight, 0);
+
+    return sumWeights !== 0 ? sumGrades / sumWeights : 0;
   }
 
   private createForm() {
@@ -71,15 +88,18 @@ export class SchoolClassComponent implements OnInit {
       ...this.addForm.value,
     };
     if (this.isEditing) {
-      this.httpService.update(`/assignment/${assignment.id}`, newAssignment).subscribe((data) => {});
+      this.httpService.update(`/assignment/${assignment.id}`, newAssignment).subscribe(() => this.loadData());
     } else {
       this.httpService
         .create('/assignment', newAssignment)
         .subscribe((data) => (this.assignments = [...this.assignments, data.body]));
     }
 
-    this.addForm.reset();
+    this.dismiss();
+  }
 
+  dismiss() {
+    this.addForm.reset();
     this.modalService.dismissAll();
   }
 }

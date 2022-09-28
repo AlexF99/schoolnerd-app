@@ -14,14 +14,14 @@
     </ul>
     <button class="btn btn-primary mb-3" (click)="open(content)">+ add assignment</button>
     <ul class="list-group mb-3">
-      <li class="list-group-item">media: 20</li>
+      <li class="list-group-item">average: {{ this.average }}</li>
     </ul>
   </div>
 
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add assignment</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
     </div>
     <div class="modal-body">
       <form [formGroup]="addForm">
