@@ -1,9 +1,15 @@
-.logo {
-  width: 100px;
-}
+@import "src/theme/theme-variables";
 
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
+.add-btn {
+  height: auto;
+  width: auto;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  button {
+    border: none;
+    border-radius: 50px;
+    height: 50px;
+    width: 50px;
+  }
 }
