@@ -55,7 +55,7 @@
             <span hidden>weight</span>
           </label>
           <label class="d-block my-3">
-            <input type="date" class="form-control" formControlName="date" placeholder="date" />
+            <input type="datetime-local" class="form-control" formControlName="date" placeholder="date" />
             <span hidden>date</span>
             <small [hidden]="addForm.controls['date'].valid || addForm.controls['date'].untouched" class="text-danger">
               date is required
