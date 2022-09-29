@@ -40,7 +40,6 @@ export class AuthenticationService {
           status: resp.body.status || null,
           message: resp.body.message || null,
         };
-        console.log(response);
 
         if (!response.status && !response.message) {
           this.credentialsService.setCredentials(response);

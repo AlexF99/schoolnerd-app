@@ -4,7 +4,10 @@ import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
   Shell.childRoutes([
-    { path: 'calendar', loadChildren: () => import('./calendar/calendar.module').then((m) => m.CalendarModule) },
+    {
+      path: 'calendar',
+      loadChildren: () => import('./calendar/calendar.module').then((m) => m.CalendarComponentModule),
+    },
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' },
