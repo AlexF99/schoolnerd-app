@@ -47,8 +47,12 @@ export class SchoolClassComponent implements OnInit {
   }
 
   getAverage(assignments: any): number {
-    const sumGrades = assignments.reduce((acc: any, current: any) => acc + current.grade * current.weight, 0);
-    const sumWeights = assignments.reduce((acc: any, current: any) => acc + current.weight, 0);
+    const sumGrades = assignments.reduce((acc: any, current: any) => {
+      return acc + (current.grade && current.weight ? current.grade * current.weight : 0);
+    }, 0);
+    const sumWeights = assignments.reduce((acc: any, current: any) => {
+      return acc + (current.grade && current.weight ? current.weight : 0);
+    }, 0);
 
     return sumWeights !== 0 ? sumGrades / sumWeights : 0;
   }
@@ -96,6 +100,10 @@ export class SchoolClassComponent implements OnInit {
     }
 
     this.dismiss();
+  }
+
+  deleteAssignment(assignment?: any) {
+    this.httpService.remove(`/assignment/${assignment.id}`).subscribe(() => this.loadData());
   }
 
   dismiss() {

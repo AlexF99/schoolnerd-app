@@ -40,8 +40,8 @@ export class HttpService {
     return this.http.patch(`${route}`, entity, { observe: 'response' });
   }
 
-  remove(route: string, entity: any): Observable<EntityResponseType> {
-    return this.http.delete(`${route}/${entity._id}`, { observe: 'response' });
+  remove(route: string, entity?: any): Observable<EntityResponseType> {
+    return this.http.delete(`${route}`, { observe: 'response' });
   }
 
   count(route: string, id?: any, filter?: any): Observable<EntityResponseType> {
