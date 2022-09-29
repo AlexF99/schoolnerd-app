@@ -35,7 +35,6 @@
                   type="password"
                   class="form-control"
                   formControlName="password"
-                  autocomplete="current-password"
                   placeholder="Password"
                   required
                 />
@@ -47,26 +46,32 @@
                   Password is required
                 </small>
               </label>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" formControlName="remember" />
-                  <span>Remember me</span>
-                </label>
-              </div>
+              <label class="d-block mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm password"
+                  required
+                />
+                <span hidden>Confirm password</span>
+                <small
+                  [hidden]="
+                    registerForm.controls['confirmPassword'].valid || registerForm.controls['confirmPassword'].untouched
+                  "
+                  class="text-danger"
+                >
+                  Confirm Password is required and must match password
+                </small>
+              </label>
             </div>
             <div class="m-3">
-              <button class="btn btn-primary w-100" type="submit" [disabled]="registerForm.invalid || isLoading">
+              <button class="btn btn-primary w-100" (click)="register()" [disabled]="registerForm.invalid || isLoading">
                 <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
-                <span>Login</span>
+                <span>Register</span>
               </button>
             </div>
           </form>
-          <div class="m-3 register">
-            <span>don't have an account?</span>
-            <a routerLink="/register" class="btn btn-primary w-100">
-              <span>Register</span>
-            </a>
-          </div>
         </div>
       </div>
     </div>

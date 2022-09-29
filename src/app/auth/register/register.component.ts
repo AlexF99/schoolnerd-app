@@ -22,7 +22,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService
   ) {
@@ -33,9 +32,25 @@ export class RegisterComponent implements OnInit {
 
   private createForm() {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: true,
+      username: ['', Validators.email],
+      password: ['', Validators.minLength(8)],
+      confirmPassword: ['', Validators.minLength(8)],
     });
+  }
+
+  register() {
+    if (
+      this.registerForm.valid &&
+      this.registerForm.controls['password'].value.toString() ===
+        this.registerForm.controls['confirmPassword'].value.toString()
+    ) {
+      const credentials = {
+        username: this.registerForm.controls['username'].value.toString(),
+        password: this.registerForm.controls['password'].value.toString(),
+      };
+      this.authenticationService
+        .register(credentials)
+        .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    }
   }
 }

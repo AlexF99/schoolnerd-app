@@ -10,6 +10,10 @@ export interface LoginContext {
   password: string;
   remember?: boolean;
 }
+export interface RegisterContext {
+  username: string;
+  password: string;
+}
 
 /**
  * Provides a base for authentication workflow.
@@ -20,6 +24,15 @@ export interface LoginContext {
 })
 export class AuthenticationService {
   constructor(private credentialsService: CredentialsService, private http: HttpClient) {}
+
+  register(credentials: RegisterContext): Observable<any> {
+    const payload = {
+      email: credentials.username,
+      password: credentials.password,
+    };
+
+    return this.http.post('/auth/register', payload, { observe: 'response' });
+  }
 
   /**
    * Authenticates the user.
