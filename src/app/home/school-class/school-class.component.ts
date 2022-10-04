@@ -99,6 +99,7 @@ export class SchoolClassComponent implements OnInit {
         .subscribe((data) => (this.assignments = [...this.assignments, data.body]));
     }
 
+    this.addForm.reset();
     this.dismiss();
   }
 

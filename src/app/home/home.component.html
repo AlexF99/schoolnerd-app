@@ -4,7 +4,16 @@
   </div>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let item of myClasses">
-      <a routerLink="/class/{{ item.id }}">{{ item.title }}</a>
+      <div class="row">
+        <div class="col-md-9 p-2">
+          <a routerLink="/class/{{ item.id }}">{{ item.title }}</a>
+          <div>min: {{ item.minGrade }}</div>
+        </div>
+        <div class="col-md-3 p-2">
+          <button class="btn btn-primary" (click)="open(content, item)">edit</button>
+          <button class="btn btn-danger ml-2" (click)="deleteClass(item)">delete</button>
+        </div>
+      </div>
     </li>
   </ul>
 </div>
@@ -39,7 +48,10 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" *ngIf="!isEditing" (click)="save()">Save</button>
+    <button type="button" class="btn btn-outline-dark" *ngIf="isEditing && editedSclass" (click)="save(editedSclass)">
+      Save
+    </button>
   </div>
 </ng-template>
 

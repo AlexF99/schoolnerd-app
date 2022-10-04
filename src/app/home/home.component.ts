@@ -12,13 +12,20 @@ export class HomeComponent implements OnInit {
   myClasses: any;
   isLoading = false;
 
+  // form
   addForm!: FormGroup;
+  isEditing: boolean = false;
+  editedSclass: any;
 
   constructor(private modalService: NgbModal, private formBuilder: FormBuilder, private httpService: HttpService) {
     this.createForm();
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.httpService.list('/school-class').subscribe((data) => {
       this.myClasses = data.body;
     });
@@ -31,18 +38,38 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  open(content: any) {
+  open(content: any, sclass?: any) {
+    if (sclass) {
+      this.isEditing = true;
+      this.editedSclass = sclass;
+      this.addForm = this.formBuilder.group({
+        title: [sclass.title, Validators.required],
+        minGrade: [sclass.minGrade, Validators.required],
+      });
+    } else {
+      this.isEditing = false;
+      this.editedSclass = null;
+    }
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  save() {
+  save(sclass?: any) {
     if (!this.addForm.valid) return;
 
-    this.httpService
-      .create('/school-class', this.addForm.value)
-      .subscribe((data) => (this.myClasses = [...this.myClasses, data.body]));
-    this.addForm.reset();
+    if (this.isEditing) {
+      this.httpService.update(`/school-class/${sclass.id}`, this.addForm.value).subscribe(() => this.loadData());
+    } else {
+      this.httpService
+        .create('/school-class', this.addForm.value)
+        .subscribe((data) => (this.myClasses = [...this.myClasses, data.body]));
+    }
 
+    this.addForm.reset();
     this.modalService.dismissAll();
+  }
+
+  deleteClass(schoolclass: any) {
+    this.httpService.remove(`/school-class/${schoolclass.id}`).subscribe(() => this.loadData());
   }
 }
