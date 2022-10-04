@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   login() {
+    if (!this.loginForm.valid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
     this.isLoading = true;
     const login$ = this.authenticationService.login(this.loginForm.value);
     login$
@@ -57,9 +61,8 @@ export class LoginComponent implements OnInit {
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', Validators.email],
       password: ['', Validators.required],
-      remember: true,
     });
   }
 }

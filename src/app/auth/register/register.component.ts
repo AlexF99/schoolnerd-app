@@ -51,6 +51,8 @@ export class RegisterComponent implements OnInit {
       this.authenticationService
         .register(credentials)
         .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    } else {
+      this.registerForm.markAllAsTouched();
     }
   }
 }
