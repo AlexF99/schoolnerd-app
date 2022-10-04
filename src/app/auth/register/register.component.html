@@ -12,22 +12,22 @@
             <i class="far fa-3x fa-user-circle text-muted"></i>
           </h4>
           <form [formGroup]="registerForm" novalidate>
-            <div class="alert alert-danger" [hidden]="!error || isLoading">Username or password incorrect.</div>
+            <div class="alert alert-danger" [hidden]="!error || isLoading">Email or password incorrect.</div>
             <div class="m-3">
               <label class="d-block my-3">
                 <input
                   type="text"
                   class="form-control"
                   formControlName="username"
-                  autocomplete="username"
-                  placeholder="Username"
+                  autocomplete="email"
+                  placeholder="Email"
                 />
-                <span hidden>Username</span>
+                <span hidden>Email</span>
                 <small
                   [hidden]="registerForm.controls['username'].valid || registerForm.controls['username'].untouched"
                   class="text-danger"
                 >
-                  Username is required
+                  Email is required
                 </small>
               </label>
               <label class="d-block mb-3">
