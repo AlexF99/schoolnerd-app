@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '@app/@shared/http.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-school-class',
@@ -74,18 +74,30 @@ export class SchoolClassComponent implements OnInit {
         title: [assignment.title, Validators.required],
         grade: assignment.grade ? assignment.grade : '',
         weight: assignment.weight ? assignment.weight : '',
-        date: [assignment.date, Validators.required],
+        date: [new Date(assignment.date).toLocaleString(), Validators.required],
       });
     } else {
       this.isEditing = false;
       this.editedAssignment = null;
     }
 
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        console.log(`Closed with: ${result}`);
+      },
+      (reason) => {
+        if (reason === ModalDismissReasons.ESC || reason === ModalDismissReasons.BACKDROP_CLICK) {
+          this.addForm.reset();
+        }
+      }
+    );
   }
 
   save(assignment?: any) {
-    if (!this.addForm.valid) return;
+    if (!this.addForm.valid) {
+      this.addForm.markAllAsTouched();
+      return;
+    }
 
     const newAssignment = {
       schoolClass: this.classId,

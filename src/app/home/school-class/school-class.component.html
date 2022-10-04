@@ -37,8 +37,8 @@
       <form [formGroup]="addForm">
         <div class="m-3">
           <label class="d-block my-3">
+            <span>Title</span>
             <input type="text" class="form-control" formControlName="title" autocomplete="title" placeholder="Title" />
-            <span hidden>Title</span>
             <small
               [hidden]="addForm.controls['title'].valid || addForm.controls['title'].untouched"
               class="text-danger"
@@ -47,16 +47,22 @@
             </small>
           </label>
           <label class="d-block my-3">
+            <span>grade</span>
             <input type="number" class="form-control" formControlName="grade" placeholder="Grade" />
-            <span hidden>grade</span>
           </label>
           <label class="d-block my-3">
+            <span>weight</span>
             <input type="number" class="form-control" formControlName="weight" placeholder="Weight" />
-            <span hidden>weight</span>
           </label>
           <label class="d-block my-3">
-            <input type="datetime-local" class="form-control" formControlName="date" placeholder="date" />
-            <span hidden>date</span>
+            <span>date</span>
+            <input
+              type="text"
+              class="form-control"
+              onfocus="(this.type='datetime-local')"
+              formControlName="date"
+              placeholder="date"
+            />
             <small [hidden]="addForm.controls['date'].valid || addForm.controls['date'].untouched" class="text-danger">
               date is required
             </small>

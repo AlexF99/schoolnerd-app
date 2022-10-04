@@ -28,15 +28,15 @@
     <form [formGroup]="addForm">
       <div class="m-3">
         <label class="d-block my-3">
+          <span>Title</span>
           <input type="text" class="form-control" formControlName="title" autocomplete="title" placeholder="Title" />
-          <span hidden>Title</span>
           <small [hidden]="addForm.controls['title'].valid || addForm.controls['title'].untouched" class="text-danger">
             Title is required
           </small>
         </label>
         <label class="d-block my-3">
+          <span>Min/Goal grade</span>
           <input type="number" class="form-control" formControlName="minGrade" placeholder="Min Grade" />
-          <span hidden>minGrade</span>
           <small
             [hidden]="addForm.controls['minGrade'].valid || addForm.controls['minGrade'].untouched"
             class="text-danger"
