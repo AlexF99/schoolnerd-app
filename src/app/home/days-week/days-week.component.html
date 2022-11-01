@@ -1,0 +1,30 @@
+<div class="days-week">
+  <h5>days of the week</h5>
+  <ul *ngIf="daysWeek">
+    <li *ngFor="let day of daysWeek">
+      {{ day.day }}: {{ day.timeStart }}-{{ day.timeEnd }}, room: {{ day.classRoom }}
+    </li>
+  </ul>
+  <button (click)="showDates = !showDates" class="btn btn-primary add">{{ showDates ? 'cancel' : 'add/edit' }}</button>
+  <ng-container *ngIf="showDates">
+    <form [formGroup]="addForm">
+      <div class="day">
+        <span>day:</span>
+        <select formControlName="day">
+          <option *ngFor="let day of daysOfWeek" [id]="day" [value]="day">{{ day }}</option>
+        </select>
+      </div>
+      <div class="time">
+        <span>time:</span>
+        <input type="time" formControlName="timeStart" />
+        <span>-</span>
+        <input type="time" formControlName="timeEnd" />
+      </div>
+      <div class="classroom">
+        <span>classroom:</span>
+        <input type="text" formControlName="classRoom" />
+      </div>
+    </form>
+    <button (click)="save()">add</button>
+  </ng-container>
+</div>

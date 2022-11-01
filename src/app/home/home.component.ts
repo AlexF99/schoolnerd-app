@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
   myClasses: any;
   isLoading = false;
 
+  daysWeek: any = [];
+
   // form
   addForm!: FormGroup;
   isEditing: boolean = false;
@@ -31,6 +33,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  addDay(newDay: any) {
+    this.daysWeek.push(newDay);
+  }
+
   private createForm() {
     this.addForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -42,6 +48,8 @@ export class HomeComponent implements OnInit {
     if (sclass) {
       this.isEditing = true;
       this.editedSclass = sclass;
+      this.daysWeek = sclass.days;
+      console.log(sclass);
       this.addForm = this.formBuilder.group({
         title: [sclass.title, Validators.required],
         minGrade: [sclass.minGrade, Validators.required],
@@ -68,13 +76,12 @@ export class HomeComponent implements OnInit {
       this.addForm.markAllAsTouched();
       return;
     }
+    const newclass = !!this.daysWeek ? { ...this.addForm.value, days: this.daysWeek } : this.addForm.value;
 
     if (this.isEditing) {
-      this.httpService.update(`/school-class/${sclass.id}`, this.addForm.value).subscribe(() => this.loadData());
+      this.httpService.update(`/school-class/${sclass.id}`, newclass).subscribe(() => this.loadData());
     } else {
-      this.httpService
-        .create('/school-class', this.addForm.value)
-        .subscribe((data) => (this.myClasses = [...this.myClasses, data.body]));
+      this.httpService.create('/school-class', newclass).subscribe(() => this.loadData());
     }
 
     this.addForm.reset();

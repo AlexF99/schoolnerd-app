@@ -7,9 +7,10 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SchoolClassComponent } from './school-class/school-class.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DaysWeekComponent } from './days-week/days-week.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, SharedModule, HomeRoutingModule, ReactiveFormsModule],
-  declarations: [HomeComponent, SchoolClassComponent],
+  declarations: [HomeComponent, SchoolClassComponent, DaysWeekComponent],
 })
 export class HomeModule {}

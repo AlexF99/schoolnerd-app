@@ -44,6 +44,9 @@
             Min Grade is required
           </small>
         </label>
+        <label class="d-block my-3">
+          <app-days-week (newDayEvent)="addDay($event)" [daysWeek]="daysWeek"></app-days-week>
+        </label>
       </div>
     </form>
   </div>
